@@ -42,6 +42,18 @@ public class SmartHealthClient {
         }
     }
 
+    public PatientStatus getPatientStatus(PatientRequest request) {
+        return patientMonitoringStub.getPatientStatus(request);
+    }
+
+    public PrescriptionResponse addPrescription(Prescription prescription) {
+        return prescriptionServiceStub.addPrescription(prescription);
+    }
+
+    public EquipmentStatus getEquipmentStatus(EquipmentRequest request) {
+        return equipmentMonitoringStub.getEquipmentStatus(request);
+    }
+
     public static void main(String[] args) throws Exception {
         String target = "localhost:50051";
 

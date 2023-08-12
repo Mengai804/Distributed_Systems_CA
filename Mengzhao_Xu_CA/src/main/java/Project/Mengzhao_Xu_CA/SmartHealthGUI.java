@@ -1,8 +1,15 @@
 package Project.Mengzhao_Xu_CA;
 
 import javax.swing.*;
+import io.grpc.Grpc;
+import io.grpc.InsecureChannelCredentials;
 import java.awt.*;
 import java.awt.event.*;
+import Project.Mengzhao_Xu_CA.PatientMonitoringServiceGrpc.*;
+import Project.Mengzhao_Xu_CA.PrescriptionServiceGrpc.*;
+import Project.Mengzhao_Xu_CA.EquipmentMonitoringServiceGrpc.*;
+
+
 
 public class SmartHealthGUI {
     private JFrame frame;
@@ -11,7 +18,18 @@ public class SmartHealthGUI {
     private JButton btnCheckEquipmentStatus;
     private JTextArea textArea;
 
+    private SmartHealthClient client;  // gRPC client instance
+
     public SmartHealthGUI() {
+        // Initialize gRPC client
+        try {
+            String target = "localhost:50051";
+            client = new SmartHealthClient(Grpc.newChannelBuilder(target, InsecureChannelCredentials.create()).build());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
         frame = new JFrame("SmartHealth Client");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -21,7 +39,7 @@ public class SmartHealthGUI {
         textArea = new JTextArea();
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
-        
+
         // Panel for buttons
         JPanel panel = new JPanel();
         btnCheckPatientStatus = new JButton("Check Patient Status");
@@ -34,25 +52,58 @@ public class SmartHealthGUI {
         frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(panel, BorderLayout.SOUTH);
 
-        // Event listeners
+        // Updated Event listeners
         btnCheckPatientStatus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Call your gRPC client's method for patient status here and display the result in the text area
-                textArea.append("Patient status checked\n");
+                new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() {
+                        try {
+                            PatientRequest patientRequest = PatientRequest.newBuilder().setPatientId("123").build();
+                            PatientStatus patientStatus = client.getPatientStatus(patientRequest);
+                            textArea.append("Received patient status: " + patientStatus.getStatus() + "\n");
+                        } catch (Exception ex) {
+                            textArea.append("Error: " + ex.getMessage() + "\n");
+                        }
+                        return null;
+                    }
+                }.execute();
             }
         });
 
         btnAddPrescription.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Call your gRPC client's method for adding a prescription here and display the result in the text area
-                textArea.append("Prescription added\n");
+                new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() {
+                        try {
+                            Prescription prescription = Prescription.newBuilder().setPrescriptionId("456").setMedicineName("Aspirin").setDosage(100).build();
+                            PrescriptionResponse prescriptionResponse = client.addPrescription(prescription);
+                            textArea.append("Received prescription response: " + prescriptionResponse.getMessage() + "\n");
+                        } catch (Exception ex) {
+                            textArea.append("Error: " + ex.getMessage() + "\n");
+                        }
+                        return null;
+                    }
+                }.execute();
             }
         });
 
         btnCheckEquipmentStatus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Call your gRPC client's method for checking equipment status here and display the result in the text area
-                textArea.append("Equipment status checked\n");
+                new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() {
+                        try {
+                            EquipmentRequest equipmentRequest = EquipmentRequest.newBuilder().setEquipmentId("789").build();
+                            EquipmentStatus equipmentStatus = client.getEquipmentStatus(equipmentRequest);
+                            textArea.append("Received equipment status: " + equipmentStatus.getStatus() + "\n");
+                        } catch (Exception ex) {
+                            textArea.append("Error: " + ex.getMessage() + "\n");
+                        }
+                        return null;
+                    }
+                }.execute();
             }
         });
     }
