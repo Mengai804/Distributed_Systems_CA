@@ -6,13 +6,15 @@ import io.grpc.stub.StreamObserver;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-
+//Server class
 public class SmartHealthServer {
+	//Logger and server initialization
     private static final Logger logger = Logger.getLogger(SmartHealthServer.class.getName());
 
     private Server server;
 
     private void start() throws IOException {
+    	// Starts the server, adds services
         int port = 50051;
         server = ServerBuilder.forPort(port)
                 .addService(new PatientMonitoringServiceImpl())
@@ -30,18 +32,21 @@ public class SmartHealthServer {
         }));
     }
 
+    // Stop the server
     private void stop() {
         if (server != null) {
             server.shutdown();
         }
     }
 
+    // Wait for the server termination 
     private void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
         }
     }
-
+    
+    // Implementations for gRPC service methods
     private class PatientMonitoringServiceImpl extends PatientMonitoringServiceGrpc.PatientMonitoringServiceImplBase {
         @Override
         public void getPatientStatus(PatientRequest req, StreamObserver<PatientStatus> responseObserver) {
@@ -72,6 +77,7 @@ public class SmartHealthServer {
         }
     }
 
+    // Main method to start the server and keep it running
     public static void main(String[] args) throws IOException, InterruptedException {
         final SmartHealthServer server = new SmartHealthServer();
         server.start();

@@ -6,6 +6,7 @@ option objc_class_prefix = "SH";
 option java_package = "Project.Mengzhao_Xu_CA";
 package Project.Mengzhao_Xu_CA;
 
+// Service Definitions: 
 // Service 1: Patient Monitoring
 service PatientMonitoringService {
   rpc GetPatientStatus(PatientRequest) returns (PatientStatus); // Unary type
@@ -24,6 +25,7 @@ service EquipmentMonitoringService {
   rpc UpdateEquipmentStatus(stream EquipmentUpdate) returns (EquipmentUpdateResponse); // Client streaming type
 }
 
+// Message Definitions:
 message PatientRequest {
   string patientId = 1;
 }

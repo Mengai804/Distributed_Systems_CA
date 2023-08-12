@@ -9,19 +9,25 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//Client class
 public class SmartHealthClient {
+	
+	// Logger for recording activities and exceptions
     private static final Logger logger = Logger.getLogger(SmartHealthClient.class.getName());
 
+    // Stubs for each gRPC services
     private final PatientMonitoringServiceGrpc.PatientMonitoringServiceBlockingStub patientMonitoringStub;
     private final PrescriptionServiceGrpc.PrescriptionServiceBlockingStub prescriptionServiceStub;
     private final EquipmentMonitoringServiceGrpc.EquipmentMonitoringServiceBlockingStub equipmentMonitoringStub;
 
+    // Constructor
     public SmartHealthClient(Channel channel) {
         patientMonitoringStub = PatientMonitoringServiceGrpc.newBlockingStub(channel);
         prescriptionServiceStub = PrescriptionServiceGrpc.newBlockingStub(channel);
         equipmentMonitoringStub = EquipmentMonitoringServiceGrpc.newBlockingStub(channel);
     }
 
+    // A sample to demonstrate gRPC calls to services
     public void runClientOperations() {
         
         try {
@@ -42,6 +48,7 @@ public class SmartHealthClient {
         }
     }
 
+    // Wrapper methods to expose client operations
     public PatientStatus getPatientStatus(PatientRequest request) {
         return patientMonitoringStub.getPatientStatus(request);
     }
@@ -54,6 +61,7 @@ public class SmartHealthClient {
         return equipmentMonitoringStub.getEquipmentStatus(request);
     }
 
+    // Main method to start and test the services
     public static void main(String[] args) throws Exception {
         String target = "localhost:50051";
 

@@ -10,8 +10,10 @@ import Project.Mengzhao_Xu_CA.PrescriptionServiceGrpc.*;
 import Project.Mengzhao_Xu_CA.EquipmentMonitoringServiceGrpc.*;
 
 
-
+//GUI class
 public class SmartHealthGUI {
+	
+	// GUI elements
     private JFrame frame;
     private JButton btnCheckPatientStatus;
     private JButton btnAddPrescription;
@@ -108,10 +110,12 @@ public class SmartHealthGUI {
         });
     }
 
+    // Show the GUI
     public void show() {
         frame.setVisible(true);
     }
 
+    // Main method to launch the GUI
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
