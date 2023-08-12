@@ -4,7 +4,7 @@ option java_multiple_files = true;
 option java_outer_classname = "SmartHealthProto";
 option objc_class_prefix = "SH";
 option java_package = "Project.Mengzhao_Xu_CA";
-package Mengzhao_Xu_CA;
+package Project.Mengzhao_Xu_CA;
 
 // Service 1: Patient Monitoring
 service PatientMonitoringService {
