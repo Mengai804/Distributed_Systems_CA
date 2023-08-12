@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_outer_classname = "SmartHealthProto";
+option objc_class_prefix = "SH";
+option java_package = "Project.Mengzhao_Xu_CA";
+package Mengzhao_Xu_CA;
+
+// Service 1: Patient Monitoring
+service PatientMonitoringService {
+  rpc GetPatientStatus(PatientRequest) returns (PatientStatus); // Unary type
+  rpc MonitorPatient(PatientRequest) returns (stream PatientStatus); // Server streaming type
+}
+
+// Service 2: Prescription Service
+service PrescriptionService {
+  rpc AddPrescription(Prescription) returns (PrescriptionResponse); // Unary type
+  rpc StreamPrescriptions(PrescriptionStreamRequest) returns (stream Prescription); // Bidirectional streaming type
+}
+
+// Service 3: Equipment Monitoring
+service EquipmentMonitoringService {
+  rpc GetEquipmentStatus(EquipmentRequest) returns (EquipmentStatus); // Unary type
+  rpc UpdateEquipmentStatus(stream EquipmentUpdate) returns (EquipmentUpdateResponse); // Client streaming type
+}
+
+message PatientRequest {
+  string patientId = 1;
+}
+
+message PatientStatus {
+  string patientId = 1;
+  string status = 2;
+  int32 heartRate = 3;
+}
+
+message Prescription {
+  string prescriptionId = 1;
+  string medicineName = 2;
+  int32 dosage = 3;
+}
+
+message PrescriptionResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message PrescriptionStreamRequest {
+  repeated string prescriptionIds = 1;
+}
+
+message EquipmentRequest {
+  string equipmentId = 1;
+}
+
+message EquipmentStatus {
+  string equipmentId = 1;
+  string status = 2;
+}
+
+message EquipmentUpdate {
+  string equipmentId = 1;
+  string updateMessage = 2;
+}
+
+message EquipmentUpdateResponse {
+  bool success = 1;
+  string message = 2;
+}

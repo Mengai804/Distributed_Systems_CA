@@ -1,4 +1,4 @@
-package Project.CA_Mengzhao_Xu;
+package Project.Mengzhao_Xu_CA;
 
 import static org.junit.Assert.assertTrue;
 
