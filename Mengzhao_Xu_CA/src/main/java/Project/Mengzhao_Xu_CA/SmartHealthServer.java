@@ -45,7 +45,7 @@ public class SmartHealthServer {
     private class PatientMonitoringServiceImpl extends PatientMonitoringServiceGrpc.PatientMonitoringServiceImplBase {
         @Override
         public void getPatientStatus(PatientRequest req, StreamObserver<PatientStatus> responseObserver) {
-            // For demo purposes. Implement actual logic.
+            // For demo
             PatientStatus status = PatientStatus.newBuilder().setStatus("Stable").build();
             responseObserver.onNext(status);
             responseObserver.onCompleted();
@@ -55,7 +55,7 @@ public class SmartHealthServer {
     private class PrescriptionServiceImpl extends PrescriptionServiceGrpc.PrescriptionServiceImplBase {
         @Override
         public void addPrescription(Prescription req, StreamObserver<PrescriptionResponse> responseObserver) {
-            // For demo purposes. Implement actual logic.
+            // For demo
             PrescriptionResponse response = PrescriptionResponse.newBuilder().setMessage("Prescription Added!").build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
@@ -65,7 +65,7 @@ public class SmartHealthServer {
     private class EquipmentMonitoringServiceImpl extends EquipmentMonitoringServiceGrpc.EquipmentMonitoringServiceImplBase {
         @Override
         public void getEquipmentStatus(EquipmentRequest req, StreamObserver<EquipmentStatus> responseObserver) {
-            // For demo purposes. Implement actual logic.
+            // For demo
             EquipmentStatus status = EquipmentStatus.newBuilder().setStatus("Operational").build();
             responseObserver.onNext(status);
             responseObserver.onCompleted();

@@ -30,7 +30,7 @@ public class SmartHealthGUI {
             return;
         }
 
-        frame = new JFrame("SmartHealth Client");
+        frame = new JFrame("SmartHealth GUI");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());

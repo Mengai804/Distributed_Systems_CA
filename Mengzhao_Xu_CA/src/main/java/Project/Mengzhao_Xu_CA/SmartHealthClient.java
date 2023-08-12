@@ -23,7 +23,7 @@ public class SmartHealthClient {
     }
 
     public void runClientOperations() {
-        // Replace with meaningful operations for each service as per your use-case
+        
         try {
             PatientRequest patientRequest = PatientRequest.newBuilder().setPatientId("123").build();
             PatientStatus patientStatus = patientMonitoringStub.getPatientStatus(patientRequest);
